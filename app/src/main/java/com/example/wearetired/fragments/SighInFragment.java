@@ -1,7 +1,10 @@
 package com.example.wearetired.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -10,8 +13,14 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.wearetired.HomeActivity;
 import com.example.wearetired.R;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -24,6 +33,7 @@ public class SighInFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+    public Button buttonSighIn;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -52,46 +62,46 @@ public class SighInFragment extends Fragment {
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-//        if (getArguments() != null) {
-//           mParam1 = getArguments().getString(ARG_PARAM1);
-//            mParam2 = getArguments().getString(ARG_PARAM2);
-//       }
-        TextView textView = getActivity().findViewById(R.id.textViewSignIn);
-        EditText editTextEmail = getActivity().findViewById(R.id.editTextTextEmailAddressSignIn);
-        EditText editTextPassword = getActivity().findViewById(R.id.editTextTextPasswordSignIn);
-        Button buttonSighIn = getActivity().findViewById(R.id.buttonSignIn);
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        buttonSighIn = getView ().findViewById(R.id.buttonSignIn);
+        TextView textView = getView().findViewById(R.id.textViewSignIn);
+        EditText editTextEmail = getView().findViewById(R.id.editTextTextEmailAddressSignIn);
+        EditText editTextPassword = getView().findViewById(R.id.editTextTextPasswordSignIn);
 
         buttonSighIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                System.out.println("clicked");
+                // значения
+                String password = editTextPassword.getText().toString();
+                String email = editTextEmail.getText().toString();
+
+                //
+                FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password)
+                        .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
+                            @Override
+                            public void onSuccess(AuthResult authResult) {
+                                startActivity(new Intent(getContext(), HomeActivity.class));
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(getContext(), "can't sign in", Toast.LENGTH_SHORT).show();
+                    }
+                });
             }
         });
-//
-//        buttonSighIn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                // значения
-//                String password = editTextPassword.getText().toString();
-//                String email = editTextEmail.getText().toString();
-//
-//                //
-//                FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password)
-//                        .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
-//                            @Override
-//                            public void onSuccess(AuthResult authResult) {
-//                                startActivity(new Intent(getContext(), HomeActivity.class));
-//                            }
-//                        }).addOnFailureListener(new OnFailureListener() {
-//                    @Override
-//                    public void onFailure(@NonNull Exception e) {
-//                        Toast.makeText(getContext(), "can't sign in", Toast.LENGTH_SHORT).show();
-//                    }
-//                });
-//            }
-//        });
+
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+           mParam1 = getArguments().getString(ARG_PARAM1);
+            mParam2 = getArguments().getString(ARG_PARAM2);
+       }
 
     }
 

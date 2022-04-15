@@ -16,15 +16,15 @@ public class UserService {
     public void signOut() {
         FirebaseAuth.getInstance().signOut();
     }
-    public void createAccount(String email, String password) {
-        User user = new User(email, FirebaseAuth.getInstance().getCurrentUser().getUid().toString(), 0);
-        FirebaseDatabase.getInstance()
-                .getReference()
-                .child(user.id)
-                .setValue(user);
-
-        FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, password);
-    }
+//    public void createAccount(String email, String password) {
+//        User user = new User(email, FirebaseAuth.getInstance().getCurrentUser().getUid().toString(), 0, name);
+//        FirebaseDatabase.getInstance()
+//                .getReference()
+//                .child(user.id)
+//                .setValue(user);
+//
+//        FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, password);
+//    }
     public void addCups(User user) {
         //FirebaseDatabase.getInstance().get
 

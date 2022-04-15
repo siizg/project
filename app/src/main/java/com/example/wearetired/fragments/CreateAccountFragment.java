@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -63,57 +64,64 @@ public class CreateAccountFragment extends Fragment {
     }
 
     @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        EditText editTextEmail = getView().findViewById(R.id.editTextTextEmailAddressCreateAccount);
+        EditText editTextPassword = getView().findViewById(R.id.editTextTextPasswordCreateAccount);
+        Button buttonCreateAccount = getView().findViewById(R.id.buttonCreateAccount);
+        EditText editTextName = getView().findViewById(R.id.editTextTextPersonName);
+        TextView textView = getView().findViewById(R.id.textView);
+
+        buttonCreateAccount.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // значения
+                String password = editTextPassword.getText().toString();
+                String email = editTextEmail.getText().toString();
+                String name = editTextName.getText().toString();
+
+                //
+                if(password.isEmpty()) {
+                    Toast.makeText(getContext(), "password is empty", Toast.LENGTH_SHORT).show();
+                }
+                else if(email.isEmpty()) {
+                    Toast.makeText(getContext(), "email is empty", Toast.LENGTH_SHORT).show();
+                }
+                else if(password.length() < 6) {
+                    Toast.makeText(getContext(), "password length too short", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, password)
+                            .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
+                                @Override
+                                public void onSuccess(AuthResult authResult) {
+                                    User user = new User(email, FirebaseAuth.getInstance().getCurrentUser().getUid().toString(), 0, name);
+                                    FirebaseDatabase.getInstance()
+                                            .getReference()
+                                            .child(user.id)
+                                            .setValue(user);
+
+                                    startActivity(new Intent(getContext(), HomeActivity.class));
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(getContext(), "can't create user", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
+            }
+        });
+    }
+
+    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-
-        EditText editTextEmail = getActivity().findViewById(R.id.editTextTextEmailAddressCreateAccount);
-        EditText editTextPassword = getActivity().findViewById(R.id.editTextTextPasswordCreateAccount);
-        Button buttonCreateAccount = getActivity().findViewById(R.id.buttonCreateAccount);
-        TextView textView = getActivity().findViewById(R.id.textView);
-//
-//        buttonCreateAccount.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                // значения
-//                String password = editTextPassword.getText().toString();
-//                String email = editTextEmail.getText().toString();
-//
-//                //
-//                if(password.isEmpty()) {
-//                    Toast.makeText(getContext(), "password is empty", Toast.LENGTH_SHORT).show();
-//                }
-//                else if(email.isEmpty()) {
-//                    Toast.makeText(getContext(), "email is empty", Toast.LENGTH_SHORT).show();
-//                }
-//                else if(password.length() < 6) {
-//                    Toast.makeText(getContext(), "password length too short", Toast.LENGTH_SHORT).show();
-//                }
-//                else {
-//                    User user = new User(email, FirebaseAuth.getInstance().getCurrentUser().getUid().toString(), 0);
-//                    FirebaseDatabase.getInstance()
-//                            .getReference()
-//                            .child(user.id)
-//                            .setValue(user);
-//
-//                    FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, password)
-//                            .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
-//                                @Override
-//                                public void onSuccess(AuthResult authResult) {
-//                                    startActivity(new Intent(getContext(), HomeActivity.class));
-//                                }
-//                            }).addOnFailureListener(new OnFailureListener() {
-//                        @Override
-//                        public void onFailure(@NonNull Exception e) {
-//                            Toast.makeText(getContext(), "can't create user", Toast.LENGTH_SHORT).show();
-//                        }
-//                    });
-//                }
-//            }
-//        });
     }
 
     @Override

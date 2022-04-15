@@ -1,14 +1,19 @@
 package com.example.wearetired.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.example.wearetired.R;
+import com.example.wearetired.TikTakTwoPlayersActivity;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -62,5 +67,32 @@ public class HomeFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_home, container, false);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        Button buttonTwoPlayers = getView().findViewById(R.id.buttonModeTwo);
+        Button buttonOnePlayers = getView().findViewById(R.id.buttonModeOne);
+
+        buttonOnePlayers.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), TikTakTwoPlayersActivity.class);
+                intent.putExtra("mode", true);
+                startActivity(intent);
+            }
+        });
+
+        buttonTwoPlayers.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), TikTakTwoPlayersActivity.class);
+                intent.putExtra("mode", false);
+                startActivity(intent);
+            }
+        });
+
+
     }
 }

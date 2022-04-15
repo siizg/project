@@ -5,9 +5,11 @@ import java.util.Objects;
 public class User {
     public String email;
     public String id;
+    public String name;
     public long cups;
 
-    public User(String email, String id, long cups) {
+    public User(String email, String id, long cups, String name) {
+        this.name = name;
         this.email = email;
         this.id = id;
         this.cups = cups;

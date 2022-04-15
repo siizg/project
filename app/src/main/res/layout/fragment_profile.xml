@@ -14,35 +14,14 @@
             android:id="@+id/textViewHello"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="100dp"
             android:layout_marginBottom="512dp"
-            android:text="hello"
             android:textSize="20dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/textViewCupsOnline"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="cups online"
-            app:layout_constraintBottom_toTopOf="@+id/textViewCupsWithComputer"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textViewHello" />
-
-        <TextView
-            android:id="@+id/textViewCupsWithComputer"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="256dp"
-            android:text="cups with computer"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textViewCupsOnline" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0" />
 
         <Button
             android:id="@+id/buttonSignOut"
@@ -52,7 +31,29 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textViewCupsWithComputer" />
+            app:layout_constraintTop_toBottomOf="@+id/textViewCupsComputer" />
+
+        <TextView
+            android:id="@+id/textViewCupsComputer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="250dp"
+            android:text="your cups: "
+            android:textSize="20dp"
+            app:layout_constraintBottom_toTopOf="@+id/buttonSignOut"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewHello" />
+
+        <ImageView
+            android:id="@+id/imageViewEmu"
+            android:layout_width="314dp"
+            android:layout_height="222dp"
+            android:src="@drawable/emu1"
+            app:layout_constraintBottom_toTopOf="@+id/buttonSignOut"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/textViewCupsComputer" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>

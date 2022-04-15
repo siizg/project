@@ -12,6 +12,7 @@ import android.widget.Button;
 import com.example.wearetired.adapters.MyFragmentSignInAdapter;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class SignInActivity extends AppCompatActivity {
 
@@ -25,6 +26,11 @@ public class SignInActivity extends AppCompatActivity {
 
         MyFragmentSignInAdapter adapter = new MyFragmentSignInAdapter(this);
         viewPager.setAdapter(adapter);
+
+        if(FirebaseAuth.getInstance().getCurrentUser() != null) {
+            Intent intent = new Intent(getBaseContext(), HomeActivity.class);
+            startActivity(intent);
+        }
 
         new TabLayoutMediator(tabLayout, viewPager, new TabLayoutMediator.TabConfigurationStrategy() {
             @Override
