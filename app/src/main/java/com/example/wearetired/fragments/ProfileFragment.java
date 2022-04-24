@@ -1,6 +1,7 @@
 package com.example.wearetired.fragments;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -15,9 +16,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.wearetired.HomeActivity;
 import com.example.wearetired.R;
-import com.example.wearetired.SignInActivity;
+import com.example.wearetired.activities.RulesActivity;
+import com.example.wearetired.activities.SignInActivity;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -68,12 +70,26 @@ public class ProfileFragment extends Fragment {
         TextView textViewHello = getView().findViewById(R.id.textViewHello);
         TextView textViewCups = getView().findViewById(R.id.textViewCupsComputer);
         Button buttonSignOut = getView().findViewById(R.id.buttonSignOut);
-        ImageView imageViewEmu = getView().findViewById(R.id.imageViewEmu);
+        ImageView imageViewKaito = getView().findViewById(R.id.imageViewKaito);
+        FloatingActionButton floatingActionButtonQuestion = getView().findViewById(R.id.floatingActionButtonQuestion);
 
-        imageViewEmu.setOnClickListener(new View.OnClickListener() {
+        floatingActionButtonQuestion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getContext(), "WANDAHOI!!", Toast.LENGTH_SHORT);
+                Intent intent = new Intent(getContext(), RulesActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        final boolean[] flag = {true};
+        imageViewKaito.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(flag[0])
+                    imageViewKaito.setImageResource(R.drawable.tsukasa);
+                else
+                    imageViewKaito.setImageResource(R.drawable.kaito);
+                flag[0] = !flag[0];
             }
         });
 
@@ -83,8 +99,10 @@ public class ProfileFragment extends Fragment {
                 .addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        String text = snapshot.getValue().toString();
-                        textViewCups.setText("your cups: " + text);
+                        if(snapshot.getValue() != null) {
+                            String text = snapshot.getValue().toString();
+                            textViewCups.setText("your cups: " + text);
+                        }
                     }
 
                     @Override
@@ -96,8 +114,10 @@ public class ProfileFragment extends Fragment {
                 .addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        String text = snapshot.getValue().toString();
-                        textViewHello.setText("hello, " + text + "!");
+                        if(snapshot.getValue() != null) {
+                            String text = snapshot.getValue().toString();
+                            textViewHello.setText("hello, " + text + "!");
+                        }
                     }
 
                     @Override

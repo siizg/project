@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.example.wearetired.activities.UsersListActivity;
 import com.example.wearetired.models.User;
 import com.firebase.ui.database.ClassSnapshotParser;
 import com.google.firebase.auth.FirebaseAuth;
@@ -26,30 +27,30 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        String id = "e03IPosjBkMKMJt9l5XWrvBAB942";
-        DatabaseReference myRef = FirebaseDatabase.getInstance().getReference(id);
-        final int[] cups = new int[1];
-
-        myRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                String cupsStr = snapshot.getValue().toString();
-                cups[0] = Integer.parseInt(cupsStr);
-                System.out.println(cups[0]);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
+//        String id = "e03IPosjBkMKMJt9l5XWrvBAB942";
+//        DatabaseReference myRef = FirebaseDatabase.getInstance().getReference(id);
+//        final int[] cups = new int[1];
+//
+//        myRef.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                String cupsStr = snapshot.getValue().toString();
+//                cups[0] = Integer.parseInt(cupsStr);
+//                System.out.println(cups[0]);
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//
+//            }
+//        });
 
         Button button = findViewById(R.id.button);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                cups[0] += 20;
-                myRef.setValue(cups[0] + "");
+                Intent intent = new Intent(getBaseContext(), UsersListActivity.class);
+                startActivity(intent);
             }
         });
     }

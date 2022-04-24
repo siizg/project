@@ -10,16 +10,22 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Wearetired">
         <activity
-            android:name=".HomeActivity"
+            android:name=".activities.UsersListActivity"
             android:exported="false" />
         <activity
-            android:name=".TikTakTwoPlayersActivity"
+            android:name=".activities.RulesActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.HomeActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.TikTakTwoPlayersActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
             android:exported="false" />
         <activity
-            android:name=".SignInActivity"
+            android:name=".activities.SignInActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

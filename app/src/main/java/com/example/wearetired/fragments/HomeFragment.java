@@ -11,9 +11,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 
 import com.example.wearetired.R;
-import com.example.wearetired.TikTakTwoPlayersActivity;
+import com.example.wearetired.activities.HomeActivity;
+import com.example.wearetired.activities.RulesActivity;
+import com.example.wearetired.activities.TikTakTwoPlayersActivity;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 /**
  * A simple {@link Fragment} subclass.

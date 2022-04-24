@@ -1,4 +1,4 @@
-package com.example.wearetired;
+package com.example.wearetired.activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,14 +12,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.wearetired.R;
+import com.example.wearetired.activities.HomeActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-
-import java.util.ArrayList;
 
 public class TikTakTwoPlayersActivity extends AppCompatActivity {
     Button button00;//ПРОБЛЕМЫ С НУЛЛАМИ
@@ -45,6 +44,7 @@ public class TikTakTwoPlayersActivity extends AppCompatActivity {
     Boolean canMakeTurn = true;
     int[][] gameMap = new int[3][3];
     int amount = 0;
+    Boolean mode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +53,7 @@ public class TikTakTwoPlayersActivity extends AppCompatActivity {
 
         initViews();
         Bundle extra = getIntent().getExtras();
-        Boolean mode = !extra.getBoolean("mode");
+        mode = !extra.getBoolean("mode");
         reset();
 
         String id = FirebaseAuth.getInstance().getCurrentUser().getUid();
@@ -62,13 +62,15 @@ public class TikTakTwoPlayersActivity extends AppCompatActivity {
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                String cupsStr = snapshot.getValue().toString();
-                cups[0] = Integer.parseInt(cupsStr);
+                if(snapshot.getValue() != null) {
+                    String cupsStr = snapshot.getValue().toString();
+                    cups[0] = Integer.parseInt(cupsStr);
+                }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
+                Toast.makeText(getApplicationContext(), "No internet connection", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -76,7 +78,7 @@ public class TikTakTwoPlayersActivity extends AppCompatActivity {
         imageViewVandahoy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getApplicationContext(), "ВАНДАХОООООООООЙ", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "wandahoi!!", Toast.LENGTH_SHORT).show();
             }
         });
         buttonGoHome.setOnClickListener(new View.OnClickListener() {
@@ -135,9 +137,13 @@ public class TikTakTwoPlayersActivity extends AppCompatActivity {
             }
         }
         amount = 0;
+        turn = true; // true - X
+        canMakeTurn = true;
+        if(mode) textViewTurn.setText("Turn X");
     }
 
     public int checkWin() {
+        //столбец
         for (int i = 0; i < gameMap.length; i++) {
             int foundRow = 0;
             for (int j = 0; j < gameMap[i].length; j++) {
@@ -160,19 +166,19 @@ public class TikTakTwoPlayersActivity extends AppCompatActivity {
                 return 2;
             }
         }
-        if (gameMap[2][0] == gameMap[1][1] && gameMap[0][0] == gameMap[0][2] && gameMap[0][0] != 0) {
-            int res = gameMap[0][0];
-            if (res == 3) {
+        if (gameMap[0][2] == gameMap[1][1] && gameMap[2][0] == gameMap[0][2] && gameMap[1][1] != 0) {
+            int res = gameMap[1][1];
+            if (res == 1) {
                 return 1;
-            } else if (res == -3) {
+            } else if (res == -1) {
                 return 2;
             }
         }
-        if (gameMap[2][0] == gameMap[0][0] && gameMap[0][2] == gameMap[2][2] && gameMap[2][0] != 0) {
-            int res = gameMap[2][0];
-            if (res == 3) {
+        if (gameMap[0][0] == gameMap[1][1] && gameMap[1][1] == gameMap[2][2] && gameMap[1][1] != 0) {
+            int res = gameMap[1][1];
+            if (res == 1) {
                 return 1;
-            } else if (res == -3) {
+            } else if (res == -1) {
                 return 2;
             }
         }
@@ -197,36 +203,18 @@ public class TikTakTwoPlayersActivity extends AppCompatActivity {
                     int resID = getResources().getIdentifier(str, "id", getPackageName());
                     Button button = ((Button) findViewById(resID));
                     button.setText("O");
-                    /*
-                    try{buttons[b].setText("O");}
-                    catch (Exception e){
-                        Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();
-                    }
-                    */
                 }
                 else if(a == 1){
                     String str = "button" + a + b;
                     int resID = getResources().getIdentifier(str, "id", getPackageName());
                     Button button = ((Button) findViewById(resID));
                     button.setText("O");
-                    /*
-                    try{buttons[b + 3].setText("O");}
-                    catch (Exception e){
-                        Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();
-                    }
-
-                     */
                 }
                 else{
                     String str = "button" + a + b;
                     int resID = getResources().getIdentifier(str, "id", getPackageName());
                     Button button = ((Button) findViewById(resID));
                     button.setText("O");
-                    /*
-                    try{buttons[b + 6].setText("O");}
-                    catch (Exception e){
-                        Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();
-                    }*/
                 }
             }
             else continue;

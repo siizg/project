@@ -46,14 +46,38 @@
             app:layout_constraintTop_toBottomOf="@+id/textViewHello" />
 
         <ImageView
-            android:id="@+id/imageViewEmu"
+            android:id="@+id/imageViewKaito"
             android:layout_width="314dp"
             android:layout_height="222dp"
-            android:src="@drawable/emu1"
+            android:src="@drawable/kaito"
             app:layout_constraintBottom_toTopOf="@+id/buttonSignOut"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.494"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/textViewCupsComputer" />
+            app:layout_constraintTop_toTopOf="@+id/textViewCupsComputer"
+            app:layout_constraintVertical_bias="0.486" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/floatingActionButtonQuestion"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="64dp"
+            android:layout_marginEnd="16dp"
+            android:clickable="true"
+            android:src="@android:drawable/ic_menu_help"
+            app:backgroundTint="#673AB7"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_marginBottom="250dp"
+            android:src="@drawable/cup"
+            app:layout_constraintBottom_toTopOf="@+id/buttonSignOut"
+            app:layout_constraintEnd_toStartOf="@+id/textViewCupsComputer"
+            app:layout_constraintTop_toBottomOf="@+id/textViewHello" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>

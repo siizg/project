@@ -15,10 +15,10 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.wearetired.HomeActivity;
+import com.example.wearetired.activities.HomeActivity;
 import com.example.wearetired.R;
+import com.example.wearetired.activities.RulesActivity;
 import com.example.wearetired.models.User;
-import com.example.wearetired.services.UserService;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.AuthResult;
@@ -102,7 +102,7 @@ public class CreateAccountFragment extends Fragment {
                                             .child(user.id)
                                             .setValue(user);
 
-                                    startActivity(new Intent(getContext(), HomeActivity.class));
+                                    startActivity(new Intent(getContext(), RulesActivity.class));
                                 }
                             }).addOnFailureListener(new OnFailureListener() {
                         @Override

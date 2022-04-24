@@ -1,4 +1,4 @@
-package com.example.wearetired;
+package com.example.wearetired.activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -6,9 +6,9 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
 
+import com.example.wearetired.R;
+import com.example.wearetired.activities.HomeActivity;
 import com.example.wearetired.adapters.MyFragmentSignInAdapter;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;

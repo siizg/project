@@ -1,5 +1,6 @@
 package com.example.wearetired.models;
 
+import java.util.ArrayList;
 import java.util.Objects;
 
 public class User {
@@ -7,6 +8,7 @@ public class User {
     public String id;
     public String name;
     public long cups;
+    //public ArrayList<String> invite;
 
     public User(String email, String id, long cups, String name) {
         this.name = name;
@@ -29,6 +31,6 @@ public class User {
 
     @Override
     public int hashCode() {
-        return Objects.hash(email, id, cups);
+        return Objects.hash(name, email, id, cups);
     }
 }

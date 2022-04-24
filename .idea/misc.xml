@@ -5,12 +5,15 @@
       <map>
         <entry key="..\:/Users/sa_su/wearetired/app/src/main/res/layout/activity_home.xml" value="0.22" />
         <entry key="..\:/Users/sa_su/wearetired/app/src/main/res/layout/activity_main.xml" value="0.22" />
+        <entry key="..\:/Users/sa_su/wearetired/app/src/main/res/layout/activity_rules.xml" value="0.22" />
         <entry key="..\:/Users/sa_su/wearetired/app/src/main/res/layout/activity_sign_in.xml" value="0.22" />
-        <entry key="..\:/Users/sa_su/wearetired/app/src/main/res/layout/activity_tik_tak_two_players.xml" value="0.17552083333333332" />
+        <entry key="..\:/Users/sa_su/wearetired/app/src/main/res/layout/activity_tik_tak_two_players.xml" value="0.22" />
+        <entry key="..\:/Users/sa_su/wearetired/app/src/main/res/layout/activity_users.xml" value="0.30094043887147337" />
         <entry key="..\:/Users/sa_su/wearetired/app/src/main/res/layout/fragment_create_account.xml" value="0.22" />
         <entry key="..\:/Users/sa_su/wearetired/app/src/main/res/layout/fragment_home.xml" value="0.22" />
         <entry key="..\:/Users/sa_su/wearetired/app/src/main/res/layout/fragment_profile.xml" value="0.22" />
         <entry key="..\:/Users/sa_su/wearetired/app/src/main/res/layout/fragment_sigh_in.xml" value="0.22" />
+        <entry key="..\:/Users/sa_su/wearetired/app/src/main/res/layout/item_fbuser_row.xml" value="0.16666666666666666" />
       </map>
     </option>
   </component>
