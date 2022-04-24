@@ -98,7 +98,7 @@ public class CreateAccountFragment extends Fragment {
                                 public void onSuccess(AuthResult authResult) {
                                     User user = new User(email, FirebaseAuth.getInstance().getCurrentUser().getUid().toString(), 0, name);
                                     FirebaseDatabase.getInstance()
-                                            .getReference()
+                                            .getReference("users")
                                             .child(user.id)
                                             .setValue(user);
 

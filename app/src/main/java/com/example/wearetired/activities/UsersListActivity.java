@@ -37,8 +37,8 @@ public class UsersListActivity extends AppCompatActivity {
                 for (DataSnapshot child : snapshot.getChildren()) {
                     User user = child.getValue(User.class);
                     users.add(new FBUser(user));
-                    adapter.notifyDataSetChanged();
                 }
+                adapter.notifyDataSetChanged();
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
