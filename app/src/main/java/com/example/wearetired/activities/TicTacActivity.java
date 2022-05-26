@@ -7,12 +7,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.wearetired.R;
-import com.example.wearetired.activities.HomeActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -20,7 +20,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-public class TikTakTwoPlayersActivity extends AppCompatActivity {
+public class TicTacActivity extends AppCompatActivity {
+    /*
     Button button00;//ПРОБЛЕМЫ С НУЛЛАМИ
     Button button01;
     Button button02;
@@ -32,6 +33,20 @@ public class TikTakTwoPlayersActivity extends AppCompatActivity {
     Button button20;
     Button button21;
     Button button22;
+    */
+
+    ImageButton button00;//ПРОБЛЕМЫ С НУЛЛАМИ
+    ImageButton button01;
+    ImageButton button02;
+
+    ImageButton button10;
+    ImageButton button11;
+    ImageButton button12;
+
+    ImageButton button20;
+    ImageButton button21;
+    ImageButton button22;
+
     final int[] cups = new int[1];
 
 
@@ -49,7 +64,7 @@ public class TikTakTwoPlayersActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_tik_tak_two_players);
+        setContentView(R.layout.activity_tic_tac);
 
         initViews();
         Bundle extra = getIntent().getExtras();
@@ -57,7 +72,7 @@ public class TikTakTwoPlayersActivity extends AppCompatActivity {
         reset();
 
         String id = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        DatabaseReference myRef = FirebaseDatabase.getInstance().getReference(id).child("cups");
+        DatabaseReference myRef = FirebaseDatabase.getInstance().getReference("users").child(id).child("cups");
 
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -117,19 +132,19 @@ public class TikTakTwoPlayersActivity extends AppCompatActivity {
         buttonReset = findViewById(R.id.buttonReset);
         buttonGoHome = findViewById(R.id.buttonGoHome);
         textViewTurn = findViewById(R.id.textViewTurn);
-        imageViewVandahoy = findViewById(R.id.imageViewVandahoy);
+        imageViewVandahoy = findViewById(R.id.imageViewVandahoi);
     }
 
     void reset() {
-        button00.setText("");
-        button01.setText("");
-        button02.setText("");
-        button10.setText("");
-        button11.setText("");
-        button12.setText("");
-        button20.setText("");
-        button21.setText("");
-        button22.setText("");
+        button00.setImageResource(R.drawable.field);
+        button01.setImageResource(R.drawable.field);
+        button02.setImageResource(R.drawable.field);
+        button10.setImageResource(R.drawable.field);
+        button11.setImageResource(R.drawable.field);
+        button12.setImageResource(R.drawable.field);
+        button20.setImageResource(R.drawable.field);
+        button21.setImageResource(R.drawable.field);
+        button22.setImageResource(R.drawable.field);
         canMakeTurn = true;
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
@@ -201,20 +216,20 @@ public class TikTakTwoPlayersActivity extends AppCompatActivity {
                 if(a == 0){
                     String str = "button" + a + b;
                     int resID = getResources().getIdentifier(str, "id", getPackageName());
-                    Button button = ((Button) findViewById(resID));
-                    button.setText("O");
+                    ImageButton button = ((ImageButton) findViewById(resID));
+                    button.setImageResource(R.drawable.zero);
                 }
                 else if(a == 1){
                     String str = "button" + a + b;
                     int resID = getResources().getIdentifier(str, "id", getPackageName());
-                    Button button = ((Button) findViewById(resID));
-                    button.setText("O");
+                    ImageButton button = ((ImageButton) findViewById(resID));
+                    button.setImageResource(R.drawable.zero);
                 }
                 else{
                     String str = "button" + a + b;
                     int resID = getResources().getIdentifier(str, "id", getPackageName());
-                    Button button = ((Button) findViewById(resID));
-                    button.setText("O");
+                    ImageButton button = ((ImageButton) findViewById(resID));
+                    button.setImageResource(R.drawable.zero);
                 }
             }
             else continue;
@@ -252,7 +267,7 @@ public class TikTakTwoPlayersActivity extends AppCompatActivity {
                 if (turn) {
                     if (gameMap[x][y] == 0) {
                         gameMap[x][y] = 1;
-                        ((Button) view).setText("X");
+                        ((ImageButton) view).setImageResource(R.drawable.cross);
                         textViewTurn.setText("Turn O");
                         amount += 1;
                     } else {
@@ -262,7 +277,7 @@ public class TikTakTwoPlayersActivity extends AppCompatActivity {
                 } else {
                     if (gameMap[x][y] == 0) {
                         gameMap[x][y] = -1;
-                        ((Button) view).setText("O");
+                        ((ImageButton) view).setImageResource(R.drawable.zero);
                         textViewTurn.setText("Turn X");
                         amount += 1;
                     } else {
@@ -308,7 +323,7 @@ public class TikTakTwoPlayersActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if (gameMap[x][y] == 0) {
                     gameMap[x][y] = 1;
-                    ((Button) view).setText("X");
+                    ((ImageButton) view).setImageResource(R.drawable.cross);
                     amount += 1;
                 } else {
                     Toast.makeText(getApplicationContext(), "You can't mark this", Toast.LENGTH_SHORT).show();

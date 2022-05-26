@@ -5,13 +5,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 
 import com.example.wearetired.R;
 import com.example.wearetired.adapters.UserAdapter;
 import com.example.wearetired.firebaseModels.FBUser;
 import com.example.wearetired.models.User;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -24,8 +26,9 @@ public class UsersListActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_users);
+        setContentView(R.layout.activity_users_list);
         ArrayList<FBUser> users = new ArrayList<>();
         DatabaseReference usersRef = FirebaseDatabase.getInstance().getReference("users");
         UserAdapter adapter = new UserAdapter(users);
@@ -37,8 +40,9 @@ public class UsersListActivity extends AppCompatActivity {
                 for (DataSnapshot child : snapshot.getChildren()) {
                     User user = child.getValue(User.class);
                     users.add(new FBUser(user));
-                    adapter.notifyDataSetChanged();
                 }
+
+                adapter.notifyDataSetChanged();
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
@@ -46,6 +50,7 @@ public class UsersListActivity extends AppCompatActivity {
         });
 
         RecyclerView recyclerView = findViewById(R.id.recyclerView);
+        Button buttonGoBack = findViewById(R.id.buttonGoBack2);
         //recyclerView.smoothScrollToPosition(users.size());
 
         LinearLayoutManager manager = new LinearLayoutManager(this);
@@ -56,5 +61,14 @@ public class UsersListActivity extends AppCompatActivity {
 
         //String id = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
+
+
+        buttonGoBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 }

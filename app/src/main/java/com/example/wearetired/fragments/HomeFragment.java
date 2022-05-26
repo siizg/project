@@ -11,13 +11,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.wearetired.R;
-import com.example.wearetired.activities.HomeActivity;
-import com.example.wearetired.activities.RulesActivity;
-import com.example.wearetired.activities.TikTakTwoPlayersActivity;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.example.wearetired.activities.TicTacActivity;
+import com.example.wearetired.activities.UsersListActivity;
+import com.example.wearetired.models.User;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -78,11 +84,47 @@ public class HomeFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         Button buttonTwoPlayers = getView().findViewById(R.id.buttonModeTwo);
         Button buttonOnePlayers = getView().findViewById(R.id.buttonModeOne);
+        ImageView imageViewVHS = getView().findViewById(R.id.imageViewVHS);
+        TextView textViewYourId = getView().findViewById(R.id.textViewYourId);
+
+        String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        FirebaseDatabase.getInstance().getReference("users").child(userId)
+                .addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        if(snapshot.getValue() != null) {
+                            User user = snapshot.getValue(User.class);
+                            String text = user.id;
+                            textViewYourId.setText("your id: " + text);
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                        Toast.makeText(getContext(), "no internet connection", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+        imageViewVHS.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getContext(), "let's go!!" , Toast.LENGTH_SHORT).show();
+            }
+        });
+        Button buttonOnline = getView().findViewById(R.id.buttonOnline);
+
+        buttonOnline.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), UsersListActivity.class);
+                startActivity(intent);
+            }
+        });
 
         buttonOnePlayers.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getContext(), TikTakTwoPlayersActivity.class);
+                Intent intent = new Intent(getContext(), TicTacActivity.class);
                 intent.putExtra("mode", true);
                 startActivity(intent);
             }
@@ -91,7 +133,7 @@ public class HomeFragment extends Fragment {
         buttonTwoPlayers.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getContext(), TikTakTwoPlayersActivity.class);
+                Intent intent = new Intent(getContext(), TicTacActivity.class);
                 intent.putExtra("mode", false);
                 startActivity(intent);
             }

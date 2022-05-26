@@ -10,26 +10,57 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <Button
-            android:id="@+id/buttonModeOne"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="128dp"
-            android:text="1 player"
-            app:layout_constraintBottom_toTopOf="@+id/buttonModeTwo"
+        <ImageView
+            android:id="@+id/imageViewVHS"
+            android:layout_width="254dp"
+            android:layout_height="208dp"
+            android:layout_marginTop="100dp"
+            android:src="@drawable/vxs"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <Button
+            android:id="@+id/buttonModeOne"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="1 player"
+            app:layout_constraintBottom_toTopOf="@+id/buttonModeTwo"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/buttonOnline" />
+
+        <Button
             android:id="@+id/buttonModeTwo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="64dp"
             android:text="2 players"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/buttonModeOne" />
+
+        <Button
+            android:id="@+id/buttonOnline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="online"
+            app:layout_constraintBottom_toTopOf="@+id/buttonModeOne"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageViewVHS"
+            app:layout_constraintVertical_chainStyle="spread" />
+
+        <TextView
+            android:id="@+id/textViewYourId"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="45dp"
+            android:layout_marginTop="64dp"
+            android:text="your id: "
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>

@@ -19,6 +19,7 @@ import android.widget.Toast;
 import com.example.wearetired.R;
 import com.example.wearetired.activities.RulesActivity;
 import com.example.wearetired.activities.SignInActivity;
+import com.example.wearetired.models.User;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -94,35 +95,22 @@ public class ProfileFragment extends Fragment {
         });
 
         String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-
-        FirebaseDatabase.getInstance().getReference(userId).child("cups")
+        FirebaseDatabase.getInstance().getReference("users").child(userId)
                 .addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         if(snapshot.getValue() != null) {
-                            String text = snapshot.getValue().toString();
-                            textViewCups.setText("your cups: " + text);
+                            User user = snapshot.getValue(User.class);
+                            String text1 = user.name;
+                            textViewHello.setText("hello, " + text1 + "!");
+                            long text2 = user.cups;
+                            textViewCups.setText("your cups: " + text2);
                         }
                     }
 
                     @Override
                     public void onCancelled(@NonNull DatabaseError error) {
-
-                    }
-                });
-        FirebaseDatabase.getInstance().getReference(userId).child("name")
-                .addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        if(snapshot.getValue() != null) {
-                            String text = snapshot.getValue().toString();
-                            textViewHello.setText("hello, " + text + "!");
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-
+                        Toast.makeText(getContext(), "no internet connection", Toast.LENGTH_SHORT).show();
                     }
                 });
 

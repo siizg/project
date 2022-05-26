@@ -2,6 +2,10 @@ package com.example.wearetired;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -20,38 +24,17 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+//        FragmentManager manager = getSupportFragmentManager();
+//        MyDialogFragment myDialogFragment = new MyDialogFragment("hey");
+//        myDialogFragment.show(manager, "myDialog");
 
-//        String id = "e03IPosjBkMKMJt9l5XWrvBAB942";
-//        DatabaseReference myRef = FirebaseDatabase.getInstance().getReference(id);
-//        final int[] cups = new int[1];
-//
-//        myRef.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                String cupsStr = snapshot.getValue().toString();
-//                cups[0] = Integer.parseInt(cupsStr);
-//                System.out.println(cups[0]);
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//
-//            }
-//        });
 
-        Button button = findViewById(R.id.button);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getBaseContext(), UsersListActivity.class);
-                startActivity(intent);
-            }
-        });
     }
 }

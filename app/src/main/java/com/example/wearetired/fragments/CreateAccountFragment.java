@@ -25,6 +25,8 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.ArrayList;
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link CreateAccountFragment#newInstance} factory method to
@@ -96,9 +98,9 @@ public class CreateAccountFragment extends Fragment {
                             .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                                 @Override
                                 public void onSuccess(AuthResult authResult) {
-                                    User user = new User(email, FirebaseAuth.getInstance().getCurrentUser().getUid().toString(), 0, name);
+                                    User user = new User(email, FirebaseAuth.getInstance().getCurrentUser().getUid().toString(), name, 0, "no", "not in game", "no", "no");
                                     FirebaseDatabase.getInstance()
-                                            .getReference()
+                                            .getReference("users")
                                             .child(user.id)
                                             .setValue(user);
 
