@@ -12,10 +12,12 @@ public class Game {
     public String status;
     public ArrayList<Integer> gameMap = new ArrayList<Integer>();
     public int amount;
+    public int winner;
 
-    public Game(String idPlayer1, String idPlayer2, int turn, String status, int amount) {
+    public Game(String idPlayer1, String idPlayer2, int turn, String status, int amount, int winner) {
         this.id = idPlayer1 + "-" + idPlayer2;
         this.amount = amount;
+        this.winner = winner;
         this.idPlayer1 = idPlayer1;
         this.idPlayer2 = idPlayer2;
         this.turn = turn;

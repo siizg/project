@@ -51,6 +51,8 @@ public class TicTacOnlineActivity extends AppCompatActivity {
     int sign, personInt;
     Game game = new Game();
 
+    int cupsFirstPlayer, cupsSecondPlayer;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,8 +69,16 @@ public class TicTacOnlineActivity extends AppCompatActivity {
             sign = -1; personInt = 2;
         }
 
+        imageViewMikuAndKaito.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getBaseContext(), "Good luck!!", Toast.LENGTH_SHORT).show();
+            }
+        });
+
         DatabaseReference playerOneRef = FirebaseDatabase.getInstance().getReference("users").child(playerOneId);
         DatabaseReference playerTwoRef = FirebaseDatabase.getInstance().getReference("users").child(playerTwoId);
+
 
         FirebaseDatabase.getInstance().getReference("games").child(gameId)
                 .addValueEventListener(new ValueEventListener() {
@@ -84,10 +94,25 @@ public class TicTacOnlineActivity extends AppCompatActivity {
                                 System.out.println(gameMap);
                                 gameMapSet();
                                 if (game.status.equals("end")) {
-                                    //FirebaseDatabase.getInstance().getReference("games").child(game.id).removeValue();
-                                    Intent intent = new Intent(getBaseContext(), HomeActivity.class);
-                                    //intent.putExtra("gameId", game.id);
-                                    startActivity(intent);
+                                    gameEnd(playerOneRef, playerTwoRef, game.winner);
+                                    Intent intent1 = new Intent(getBaseContext(), HomeActivity.class);
+                                    if(person.equals("1")) {
+                                        intent1.putExtra("gameId", game.id);
+                                    }
+
+                                    if(game.winner == personInt) {
+                                        intent1.putExtra("cups", 20);
+                                        startActivity(intent1);
+                                    }
+                                    else if(game.winner != 0 && game.winner != personInt) {
+                                        intent1.putExtra("cups", 0);
+                                        startActivity(intent1);
+                                    }
+                                    else if(game.winner == 0) {
+                                        intent1.putExtra("cups", 10);
+                                        startActivity(intent1);
+                                    }
+
                                 }
                             }
                         }
@@ -101,7 +126,6 @@ public class TicTacOnlineActivity extends AppCompatActivity {
 
         initViews();
 
-        canMakeTurn = true;
         canMakeTurn = true;
         textViewTurnOnline.setText("Turn X");
         DatabaseReference myRef = FirebaseDatabase.getInstance().getReference("games").child(gameId);
@@ -209,27 +233,28 @@ public class TicTacOnlineActivity extends AppCompatActivity {
                         case 1:
                             //textViewTurn.setText("X win!!!!");
                             Toast.makeText(getApplicationContext(), "X win!!!!", Toast.LENGTH_SHORT).show();
-                            //TODO
-                            gameEnd(playerOneRef, playerTwoRef);
-                            myRef.child("status").setValue("end");
-
-
+                            FirebaseDatabase.getInstance().getReference("games").child(gameId).child("winner")
+                                    .setValue(1);
+                            FirebaseDatabase.getInstance().getReference("games").child(gameId).child("status")
+                                    .setValue("end");
                             break;
+
                         case 2:
                             //textViewTurn.setText("O win!!!!");
                             Toast.makeText(getApplicationContext(), "O win!!!!", Toast.LENGTH_SHORT).show();
-                            //TODO
-                            gameEnd(playerOneRef, playerTwoRef);
-                            myRef.child("status").setValue("end");
-
+                            FirebaseDatabase.getInstance().getReference("games").child(gameId).child("winner")
+                                    .setValue(2);
+                            FirebaseDatabase.getInstance().getReference("games").child(gameId).child("status")
+                                    .setValue("end");
                             break;
+
                         case 3:
                             //textViewTurn.setText("Draw");
                             Toast.makeText(getApplicationContext(), "Draw", Toast.LENGTH_SHORT).show();
-                            //TODO
-                            gameEnd(playerOneRef, playerTwoRef);
-                            myRef.child("status").setValue("end");
-
+                            FirebaseDatabase.getInstance().getReference("games").child(gameId).child("winner")
+                                    .setValue(0);
+                            FirebaseDatabase.getInstance().getReference("games").child(gameId).child("status")
+                                    .setValue("end");
                             break;
                     }
 
@@ -244,16 +269,18 @@ public class TicTacOnlineActivity extends AppCompatActivity {
             }
         };
     }
-    public void gameEnd(DatabaseReference playerOneRef, DatabaseReference playerTwoRef) {
+    public void gameEnd(DatabaseReference playerOneRef, DatabaseReference playerTwoRef, int winner) {
+
         playerOneRef.child("turn").setValue("no");
         playerTwoRef.child("turn").setValue("no");
+
+        playerOneRef.child("status").setValue("not in game");
+        playerTwoRef.child("status").setValue("not in game");
+
         playerTwoRef.child("invite").setValue("no");
 
         playerOneRef.child("playWith").setValue("no");
         playerTwoRef.child("playWith").setValue("no");
-
-        playerOneRef.child("status").setValue("not in game");
-        playerTwoRef.child("status").setValue("not in game");
 
     }
 

@@ -12,10 +12,12 @@ public class User {
     public String status;
     public String playWith;
     public String turn;
+    public int bonusCups;
 
     public User(String email, String id, String name, long cups, String invite, String status, String playWith, String turn) {
         this.email = email;
         this.id = id;
+        this.bonusCups = 0;
         this.turn = turn;
         this.playWith = playWith;
         this.status = status;

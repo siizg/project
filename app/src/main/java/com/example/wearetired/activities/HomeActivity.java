@@ -7,6 +7,7 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import com.example.wearetired.MyDialogFragment;
 import com.example.wearetired.MyDialogFragmentWithButton;
@@ -35,7 +36,27 @@ public class HomeActivity extends AppCompatActivity {
         MyFragmentHomeAdapter adapter = new MyFragmentHomeAdapter(this);
         viewPager2.setAdapter(adapter);
 
+
+        Bundle bundle = getIntent().getExtras();
         String id = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        String gameId;
+        int bonusCups;
+
+        try {
+            gameId = bundle.getString("gameId");
+            FirebaseDatabase.getInstance().getReference("games").child(gameId).removeValue();
+        }
+        catch(Exception e) {
+
+        }
+        try {
+            bonusCups = bundle.getInt("cups");
+            FirebaseDatabase.getInstance().getReference("users").child(id).child("bonusCups").setValue(bonusCups);
+        } catch (Exception e) {
+
+        }
+
+
         FirebaseDatabase.getInstance().getReference("users").child(id)
                 .addValueEventListener(new ValueEventListener() {
                     @Override
@@ -43,12 +64,20 @@ public class HomeActivity extends AppCompatActivity {
                         if(snapshot != null) {
                             User user = snapshot.getValue(User.class);
                             String playerOneId = "no", playerTwoId = "no", person = "no";
+                            if(user.bonusCups != 0) {
+                                int bonusCups1 = user.bonusCups;
+                                FirebaseDatabase.getInstance().getReference("users").child(id).child("bonusCups")
+                                        .setValue(0);
+                                FirebaseDatabase.getInstance().getReference("users").child(id).child("cups")
+                                        .setValue(user.cups + bonusCups1);
+                            }
 
                             if(!user.invite.equals("no")) {
                                 if(user.playWith.equals("waiting")) {
-                                    FragmentManager manager = getSupportFragmentManager();
-                                    MyDialogFragment myDialogFragment = new MyDialogFragment();
-                                    myDialogFragment.show(manager, "dialog");
+                                    Toast.makeText(getBaseContext(), "Waiting for second player", Toast.LENGTH_LONG).show();
+//                                    FragmentManager manager = getSupportFragmentManager();
+//                                    MyDialogFragment myDialogFragment = new MyDialogFragment();
+//                                    myDialogFragment.show(manager, "dialog");
                                 }
                                 else {
                                     FragmentManager manager = getSupportFragmentManager();
@@ -61,17 +90,22 @@ public class HomeActivity extends AppCompatActivity {
                                     playerOneId = user.id;
                                     playerTwoId = user.playWith;
                                     person = user.turn;
+                                    Intent intent = new Intent(getBaseContext(), TicTacOnlineActivity.class);
+                                    intent.putExtra("playerOneId", playerOneId);
+                                    intent.putExtra("playerTwoId", playerTwoId);
+                                    intent.putExtra("turn", person);
+                                    startActivity(intent);
                                 }
                                 else if (user.turn.equals("2")) {
                                     playerOneId = user.playWith;
                                     playerTwoId = user.id;
                                     person = user.turn;
+                                    Intent intent = new Intent(getBaseContext(), TicTacOnlineActivity.class);
+                                    intent.putExtra("playerOneId", playerOneId);
+                                    intent.putExtra("playerTwoId", playerTwoId);
+                                    intent.putExtra("turn", person);
+                                    startActivity(intent);
                                 }
-                                Intent intent = new Intent(getBaseContext(), TicTacOnlineActivity.class);
-                                intent.putExtra("playerOneId", playerOneId);
-                                intent.putExtra("playerTwoId", playerTwoId);
-                                intent.putExtra("turn", person);
-                                startActivity(intent);
                             }
                         }
                     }

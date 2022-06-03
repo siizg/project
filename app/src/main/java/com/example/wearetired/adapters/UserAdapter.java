@@ -86,7 +86,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
                     playerOneRef.child("playWith").setValue("waiting");
 
 
-                    Game game = new Game(playerOneId, playerTwoId, 1, "waiting", 0);
+                    Game game = new Game(playerOneId, playerTwoId, 1, "waiting", 0, -1);
                     FirebaseDatabase.getInstance().getReference("games").child(game.id).setValue(game);
 
                 }
