@@ -69,12 +69,6 @@ public class TicTacOnlineActivity extends AppCompatActivity {
             sign = -1; personInt = 2;
         }
 
-        imageViewMikuAndKaito.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(getBaseContext(), "Good luck!!", Toast.LENGTH_SHORT).show();
-            }
-        });
 
         DatabaseReference playerOneRef = FirebaseDatabase.getInstance().getReference("users").child(playerOneId);
         DatabaseReference playerTwoRef = FirebaseDatabase.getInstance().getReference("users").child(playerTwoId);
@@ -125,6 +119,13 @@ public class TicTacOnlineActivity extends AppCompatActivity {
                 });
 
         initViews();
+        imageViewMikuAndKaito.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getBaseContext(), "Good luck!!", Toast.LENGTH_SHORT).show();
+            }
+        });
+
 
         canMakeTurn = true;
         textViewTurnOnline.setText("Turn X");
