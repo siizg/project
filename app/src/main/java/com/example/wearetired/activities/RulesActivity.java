@@ -12,12 +12,13 @@ import android.widget.TextView;
 import com.example.wearetired.R;
 
 public class RulesActivity extends AppCompatActivity {
-    String rules = "Rules of the game:\n" +
-            "The rules are very simple! You need to put tic-tac-toe on a 3x3 board in such a way as to get three in a row (horizontally, vertically or diagonally). Having received one of these combinations from your signs, you win. \n" +
-            "The \"One player\" mode involves playing with a computer, for a victory over which you will be awarded 20 cups, for a draw 10 cups, for a defeat 0 cups.\n" +
-            "The \"Two players\" mode implies a 1-on-1 game with a person, in which everyone goes for their own sign (cross or toe). No cups are awarded for winning in this mode.\n" +
-            "In your profile, you can view the number of your cups or read the rules again.\n" +
-            "Have a good game!";
+    String rules = "Rules:\n" +
+            "  The rules are very simple!  You need to put crosses or zeroes on the board 3x3 in such a way that the horizon gets three in a row (vertically, horizontally or diagonally).  By getting one of the those combinations from your signs, you win.\n" +
+            "  In the Single player mode you will play with a computer. For a victory you will get 20 cups, for a draw 10 cups, for the loss 0 cups.\n" +
+            "  In the \"Two players\" mode you need to play with a person 1 on 1, in which everyone goes beyond their sign (cross or zero).  Cups are not awarded in this mode.\n" +
+            "  In the  \"online\" mode you will play with a person over the network (the one who invites plays as cross).  You will get 20 cups of win, 10 for draw and 0 for loss.\n" +
+            "  In your profile, you can determine the number of cups you have or read the rules again.\n" +
+            "  Good luck!";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
